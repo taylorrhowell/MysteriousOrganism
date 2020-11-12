@@ -13,10 +13,12 @@ const mockUpStrand = () => {
   return newStrand;
 };
 
-const pAequorFactory = (number, DNA) => {
+//Factory function for creating simulations of P. aequor, our mysterious organism
+const pAequorFactory = (specimenNum, dna) => {
     return {
-        specimenNum: number,
-        dna: DNA,
+        specimenNum,
+        dna,
+        //Method that simulates P. aequor's tendancy to mutate
         mutate() {
             const index = Math.floor(Math.random() * 16);
             let mutantBase = this.dna[index];
@@ -28,6 +30,7 @@ const pAequorFactory = (number, DNA) => {
                 this.mutate();
             };
         },
+        //Method that allows us to compare an instance of P. aequor to another
         compareDNA(pAequor) {
             let matches = [];
             for (let i = 0; i < 15; i++) {
@@ -38,6 +41,7 @@ const pAequorFactory = (number, DNA) => {
             const percentage = Math.round((matches.length / 15) * 100);
             console.log(`Specimen #${this.specimenNum} and specimen #${pAequor.specimenNum} have ${percentage}% DNA in common.`);
         },
+        //Method that will determine if an instance of P. aequor is likely to survive
         willLikelySurvive() {
             let targetBases = [];
             this.dna.forEach(element => {
@@ -46,6 +50,7 @@ const pAequorFactory = (number, DNA) => {
                 }
             });
             const percentage = Math.round((targetBases.length / 15) * 100);
+            //Studies show that P. aequor is likely to survive if its DNA composition contains at least 60% 'C' or 'G'
             if (percentage >= 60) {
                 return true;
             } else {
@@ -54,10 +59,10 @@ const pAequorFactory = (number, DNA) => {
         }
     };
 };
-
+//Let's create a group of P. aequor instances that are likely to survive in order to study them.
 let studyGroup = [];
 let count = 1;
-
+//30 instances should be enough...
 while (studyGroup.length < 30) {
     let specimen = pAequorFactory(count, mockUpStrand());
     if (specimen.willLikelySurvive()) {
