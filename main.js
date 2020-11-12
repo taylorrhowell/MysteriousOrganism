@@ -27,16 +27,26 @@ const pAequorFactory = (number, DNA) => {
             } else {
                 this.mutate();
             };
+        },
+        compareDNA(pAequor) {
+            let matches = [];
+            for (let i = 0; i < 15; i++) {
+                if (this.dna[i] === pAequor.dna[i]) {
+                    matches.push(pAequor.dna[i]);
+                }
+            }
+            const percentage = Math.round((matches.length / 15) * 100);
+            console.log(`Specimen #${this.specimenNum} and specimen #${pAequor.specimenNum} have ${percentage}% DNA in common.`);
         }
     };
 };
 const nokiDNA = ['C', 'A', 'T', 'G', 'C', 'A', 'T', 'G', 'C', 'A', 'T', 'G', 'C', 'A', 'T'];
 const noki = pAequorFactory(1, nokiDNA);
-console.log(noki.dna);
-console.log(noki.mutate());
+/*console.log(noki.dna);
+console.log(noki.mutate());*/
+const nugget = pAequorFactory(2, mockUpStrand());
 
-
-
+noki.compareDNA(nugget);
 
 
 
