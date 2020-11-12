@@ -37,16 +37,31 @@ const pAequorFactory = (number, DNA) => {
             }
             const percentage = Math.round((matches.length / 15) * 100);
             console.log(`Specimen #${this.specimenNum} and specimen #${pAequor.specimenNum} have ${percentage}% DNA in common.`);
+        },
+        willLikelySurvive() {
+            let targetBases = [];
+            this.dna.forEach(element => {
+                if (element === 'C' || element === 'G') {
+                    targetBases.push(element);
+                }
+            });
+            const percentage = Math.round((targetBases.length / 15) * 100);
+            if (percentage >= 60) {
+                return true;
+            } else {
+                return false;
+            };
         }
     };
 };
-const nokiDNA = ['C', 'A', 'T', 'G', 'C', 'A', 'T', 'G', 'C', 'A', 'T', 'G', 'C', 'A', 'T'];
-const noki = pAequorFactory(1, nokiDNA);
-/*console.log(noki.dna);
-console.log(noki.mutate());*/
-const nugget = pAequorFactory(2, mockUpStrand());
 
-noki.compareDNA(nugget);
+let studyGroup = [];
+let count = 1;
 
-
-
+while (studyGroup.length < 30) {
+    let specimen = pAequorFactory(count, mockUpStrand());
+    if (specimen.willLikelySurvive()) {
+        studyGroup.push(specimen);
+    };
+    count++
+};
